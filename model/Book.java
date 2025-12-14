@@ -1,5 +1,8 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Book {
     private int bookId;
     private String title;
@@ -7,6 +10,8 @@ public class Book {
     private int publishYear;
     private boolean isAvailable;
     private int pageNumber;
+    private Queue<User> reservationQueue; 
+
 
     public Book(int bookId, String title, String author, int publishYear, int pageNumber) {
         this.bookId = bookId;
@@ -15,11 +20,39 @@ public class Book {
         this.publishYear = publishYear;
         this.isAvailable = true;
         this.pageNumber = pageNumber;
+        this.reservationQueue = new LinkedList<>();
     }
 
-    public int getBookId() { return bookId; }
-    public String getTitle() { return title; }
-    public boolean isAvailable() { return isAvailable; }
-    public void borrowBook() { isAvailable = false; }
-    public void returnBook() { isAvailable = true; }
+    public int getBookId() {
+        return bookId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void borrowBook() {
+        isAvailable = false;
+    }
+
+    public void returnBook() {
+        isAvailable = true;
+    }
+
+        public void addReservation(User user) {
+        reservationQueue.add(user);
+        System.out.println(user.getName() + " reserved: " + title);
+    }
+
+    public User getNextReservation() {
+        return reservationQueue.poll(); // returns and removes next user
+    }
+
+    public boolean hasReservations() {
+        return !reservationQueue.isEmpty();
+    }
 }
