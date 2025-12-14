@@ -1,0 +1,95 @@
+import java.util.ArrayList;
+import java.util.List;
+import model.*;
+
+/* ===================== LIBRARY COLLECTION ===================== */
+class LibraryCollections {
+    private List<Book> books;
+
+    public LibraryCollections() {
+        books = new ArrayList<>();
+        books.add(new Book(1, "Clean Code", "Robert C. Martin", 2008, 201));
+        books.add(new Book(2, "Effective Java", "Joshua Bloch", 2018, 278));
+        books.add(new Book(3, "Design Patterns", "Erich Gamma", 1994, 308));
+        books.add(new Book(4, "Java Concurrency in Practice", "Brian Goetz", 2006, 483));
+        books.add(new Book(5, "Head First Java", "Kathy Sierra", 2005, 109));
+        books.add(new Book(6, "Refactoring", "Martin Fowler", 1999, 302));
+        books.add(new Book(7, "The Pragmatic Programmer", "Andrew Hunt", 1999, 280));
+        books.add(new Book(8, "Algorithms", "Robert Sedgewick", 2011, 247));
+        books.add(new Book(9, "Introduction to Algorithms", "Thomas H. Cormen", 2009, 230));
+        books.add(new Book(10, "Java: The Complete Reference", "Herbert Schildt", 2021, 407));
+    }
+
+    public void showBooks() {
+        System.out.println("=== ALL BOOKS ===");
+        for (Book b : books) {
+            System.out.println(
+                b.getBookId() + " | " +
+                b.getTitle() + " | Available: " +
+                b.isAvailable()
+            );
+        }
+    }
+
+    public Book getBookById(int bookId) {
+        for (Book b : books) {
+            if (b.getBookId() == bookId) return b;
+        }
+        return null;
+    }
+
+    public int totalBooks() {
+        return books.size();
+    }
+}
+
+
+/* ===================== LIBRARY MEMBER ===================== */
+class LibraryMember {
+    private List<User> members;
+
+    public LibraryMember() {
+        members = new ArrayList<>();
+        members.add(new User("Alice"));
+        members.add(new User("Bob"));
+        members.add(new User("Maria"));
+        members.add(new User("KJ"));
+    }
+
+    // Check if user exists
+    public User getUserByName(String name) {
+        for (User u : members) {
+            if (u.getName().equalsIgnoreCase(name)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    public User getUserByID(int id) {
+        for (User u : members) {
+            if (u.getUserId() == id) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    // Add a new user
+    public void addUser(String name) {
+        if (getUserByName(name) == null) {  // avoid duplicates
+            User newUser = new User(name);
+            members.add(newUser);
+            System.out.println("User added: " + newUser.getUserId() + " | " + name);
+        } else {
+            System.out.println("User already exists: " + name);
+        }
+    }
+
+    public void showAllUsers() {
+        System.out.println("=== ALL USERS ===");
+        for (User u : members) {
+            System.out.println(u.getUserId() + " | " + u.getName());
+        }
+    }
+}
+
