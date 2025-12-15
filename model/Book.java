@@ -10,8 +10,7 @@ public class Book {
     private int publishYear;
     private boolean isAvailable;
     private int pageNumber;
-    private Queue<User> reservationQueue; 
-
+    private Queue<User> reservationQueue;
 
     public Book(int bookId, String title, String author, int publishYear, int pageNumber) {
         this.bookId = bookId;
@@ -31,6 +30,18 @@ public class Book {
         return title;
     }
 
+    public int getPublishYear() {
+        return publishYear;
+    }
+
+    public int getBookPages() {
+        return pageNumber;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
     public boolean isAvailable() {
         return isAvailable;
     }
@@ -43,7 +54,7 @@ public class Book {
         isAvailable = true;
     }
 
-        public void addReservation(User user) {
+    public void addReservation(User user) {
         reservationQueue.add(user);
         System.out.println(user.getName() + " reserved: " + title);
     }

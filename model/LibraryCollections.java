@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +32,7 @@ public class LibraryCollections {
     public void showBooks() {
         System.out.println("=== ALL BOOKS ===");
         for (Book b : books) {
-            System.out.println(
-                    b.getBookId() + " | " +
-                            b.getTitle() + " | Available: " +
-                            b.isAvailable());
+            System.out.println("ID: " + b.getBookId() + " | " + "Title: " + b.getTitle() + " | Author: " + b.getAuthor() + " | Year Publish: " + b.getPublishYear() + " | Available: " + b.isAvailable());
         }
     }
 
@@ -49,6 +47,19 @@ public class LibraryCollections {
     public int totalBooks() {
         return books.size();
     }
+
+    public List<Book> getAllBooks() {
+        return books;
+    }
+
+    public List<Book> searchBooksByTitle(String keyword) {
+        List<Book> results = new ArrayList<>();
+        for (Book b : books) {
+            if (b.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+                results.add(b);
+            }
+        }
+        return results;
+    }
+
 }
-
-

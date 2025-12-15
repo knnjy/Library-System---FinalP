@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Transaction {
     private static int transactionCounter = 1; // auto-increment transaction number
-    
+
     private int transactionNo;
-    private List<Book> books;       // books involved in transaction
-    private User client;            // who performed the action
+    private List<Book> books; // books involved in transaction
+    private User client; // who performed the action
     private Date dateBorrowed;
     private Date dateDue;
     private Date dateReturned;
-    private String status;          // "BORROWED", "RETURNED", "RESERVED"
+    private String status; // "BORROWED", "RETURNED", "RESERVED"
 
     public Transaction(User client) {
         this.transactionNo = transactionCounter++;
@@ -52,6 +52,9 @@ public class Transaction {
     public String getStatus() {
         return status;
     }
+    public Date getDateBorrowed() { return dateBorrowed; }
+    public Date getDateDue() { return dateDue; }
+    public Date getDateReturned() { return dateReturned; }
 
     public User getClient() {
         return client;
@@ -72,6 +75,36 @@ public class Transaction {
         System.out.println("Borrowed: " + dateBorrowed);
         System.out.println("Due: " + dateDue);
         System.out.println("Returned: " + dateReturned);
+
+        long fine = calculateFine();
+        if (fine > 0) {
+            System.out.println("Overdue Fine: $" + fine);
+        } else {
+            System.out.println("No fines.");
+        }
         System.out.println("---------------------------");
     }
+
+    public long calculateFine() {
+        if (dateDue == null)
+            return 0; // no due date set
+        Date today = new Date();
+
+        // If not returned yet and today is past due
+        if (dateReturned == null && today.after(dateDue)) {
+            long diffMillis = today.getTime() - dateDue.getTime();
+            long daysOverdue = diffMillis / (1000 * 60 * 60 * 24);
+            return daysOverdue * 50; // ₱50 per day
+        }
+
+        // If returned late
+        if (dateReturned != null && dateReturned.after(dateDue)) {
+            long diffMillis = dateReturned.getTime() - dateDue.getTime();
+            long daysOverdue = diffMillis / (1000 * 60 * 60 * 24);
+            return daysOverdue * 50;
+        }
+
+        return 0; // no fine
+    }
 }
+

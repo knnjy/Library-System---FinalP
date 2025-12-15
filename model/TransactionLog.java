@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,18 +16,32 @@ public class TransactionLog {
 
     public void showAllTransactions() {
         System.out.println("=== TRANSACTION HISTORY ===");
-        for (Transaction t : transactions) {
-            t.showTransaction();
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions recorded.");
+        } else {
+            for (Transaction t : transactions) {
+                t.showTransaction();
+            }
         }
     }
 
-    public List<Transaction> getTransactionsByUser(User user) {
-        List<Transaction> result = new ArrayList<>();
+    // Show transactions for a specific user
+    public void showTransactionsByUser(User user) {
+        System.out.println("=== Transactions for " + user.getName() + " ===");
+        boolean found = false;
         for (Transaction t : transactions) {
             if (t.getClient().equals(user)) {
-                result.add(t);
+                t.showTransaction();
+                found = true;
             }
         }
-        return result;
+        if (!found) {
+            System.out.println("No transactions found.");
+        }
     }
+
+    public List<Transaction> getAllTransactions() {
+        return transactions;
+    }
+
 }

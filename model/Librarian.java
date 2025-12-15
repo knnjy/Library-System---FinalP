@@ -6,7 +6,7 @@ import java.util.List;
 public class Librarian extends Person {
     private static int idCounter = 1000; // separate ID range for librarians
     private int librarianId;
-    private List<User> registeredUsers;  // ✅ list of registered users
+    private List<User> registeredUsers; 
 
     public Librarian(String name) {
         super(name); // call Person constructor
