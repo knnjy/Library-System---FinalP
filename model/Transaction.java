@@ -8,7 +8,7 @@ public class Transaction {
     private static int transactionCounter = 1; // auto-increment transaction number
 
     private int transactionNo;
-    private List<Book> books; // books involved in transaction
+    private List<Book> books; 
     private User client; // who performed the action
     private Date dateBorrowed;
     private Date dateDue;
@@ -64,6 +64,7 @@ public class Transaction {
         return books;
     }
 
+    // Display Transaction Details
     public void showTransaction() {
         System.out.println("Transaction #" + transactionNo);
         System.out.println("Client: " + client.getName());
@@ -85,6 +86,7 @@ public class Transaction {
         System.out.println("---------------------------");
     }
 
+    // Calculate fines
     public long calculateFine() {
         if (dateDue == null)
             return 0; // no due date set
@@ -94,7 +96,7 @@ public class Transaction {
         if (dateReturned == null && today.after(dateDue)) {
             long diffMillis = today.getTime() - dateDue.getTime();
             long daysOverdue = diffMillis / (1000 * 60 * 60 * 24);
-            return daysOverdue * 50; // ₱50 per day
+            return daysOverdue * 50; 
         }
 
         // If returned late

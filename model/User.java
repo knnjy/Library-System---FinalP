@@ -11,7 +11,7 @@ public class User extends Person {
     private List<Book> borrowedBooks;
 
     public User(String name, String contactNumber) {
-        super(name); // still inherit name from Person
+        super(name); 
         this.userId = idCounter++;
         this.contactNumber = contactNumber;
         this.borrowedBooks = new ArrayList<>();
@@ -25,6 +25,7 @@ public class User extends Person {
         return name;
     }
 
+    // Setter
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
@@ -33,7 +34,7 @@ public class User extends Person {
     public boolean borrowBook(Book book, TransactionLog log) {
         if (borrowedBooks.size() >= 3) {
             System.out.println("Borrowing limit reached. You can only borrow up to 3 books.");
-            return false; // ✅ must return a boolean
+            return false; 
         }
         if (book.isAvailable()) {
             borrowedBooks.add(book);
@@ -52,6 +53,7 @@ public class User extends Person {
         }
     }
 
+    // Return book and update transaction
     public boolean returnBook(Book book, TransactionLog log, Date returnDate) {
         if (borrowedBooks.contains(book)) {
             borrowedBooks.remove(book);
@@ -59,7 +61,7 @@ public class User extends Person {
 
             // Find the borrow transaction for this book
             Transaction borrowTx = null;
-            for (Transaction t : log.getAllTransactions()) { // ✅ use getter, not showAllTransactions
+            for (Transaction t : log.getAllTransactions()) { 
                 if (t.getClient().equals(this)
                         && t.getBooks().contains(book)
                         && "BORROWED".equals(t.getStatus())) {
@@ -72,7 +74,6 @@ public class User extends Person {
             returnTx.addBook(book);
             returnTx.setReturnDetails(returnDate);
 
-            // ✅ carry over the due date from borrow transaction
             if (borrowTx != null) {
                 returnTx.setBorrowDetails(borrowTx.getDateBorrowed(), borrowTx.getDateDue());
             }
@@ -83,7 +84,7 @@ public class User extends Person {
 
             long fine = returnTx.calculateFine();
             if (fine > 0) {
-                System.out.println("⚠️ Overdue Fine: ₱" + fine);
+                System.out.println("Overdue Fine: " + fine);
             } else {
                 System.out.println("No fines.");
             }
@@ -113,6 +114,7 @@ public class User extends Person {
         }
     }
 
+    // display borrowed books
     public void showBorrowedBooks() {
         System.out.println(name + "'s borrowed books:");
         if (borrowedBooks.isEmpty()) {

@@ -19,39 +19,50 @@ public class Main {
         LibraryLibrarians libraryLibrarians = new LibraryLibrarians();
         TransactionLog transactionLog = new TransactionLog();
 
+        boolean continueProgram = true;
         do {
             System.out.println("\n--- Login ---");
             System.out.println("1. Member");
             System.out.println("2. Librarian");
+            System.out.println("3. Exit Program");
             System.out.print(">> Enter your role: ");
 
             int role = -1;
-            try {
+
+            try { // Validate choices
                 role = Integer.parseInt(sc.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter 1 or 2.");
                 continue; // go back to the start of the loop
             }
 
+            // Run process based on role
             if (role == 1) {
-                runMemberProcess(members, library, transactionLog);
+                runMemberProcess(members, library, transactionLog); 
             } else if (role == 2) {
                 runLibrarianProcess(library, transactionLog, libraryLibrarians);
-            } else {
+            } else if (role == 3) {
+                System.out.println("Thank You for using the program.");
+                continueProgram = false;
+            }
+            
+            else {
                 System.out.println("Invalid choice. Please enter 1 for Member or 2 for Librarian.");
             }
 
-        } while (true);
+        } while (continueProgram);
     }
 
     // Member process
     private static void runMemberProcess(LibraryMembers members, LibraryCollections library,
-            TransactionLog transactionLog) {
+        TransactionLog transactionLog) {
         String continueChoice = null;
         User isMember = loginOrRegister(members);
+        
         do {
             boolean logout = false;
 
+            // User Features
             while (logout == false) {
                 System.out.println("\n--- Library Features ---\n");
                 System.out.println("1. Borrow Book");
@@ -134,6 +145,7 @@ public class Main {
         System.out.print("Enter librarian name: ");
         String libName = sc.nextLine();
 
+        // Check if name is registered
         if (!libraryLibrarians.isRegistered(libName)) {
             System.out.println("Access denied. Librarian not registered.");
             return;
@@ -143,6 +155,7 @@ public class Main {
         System.out.println("Welcome Librarian " + librarian.getName());
 
         boolean logout = false;
+        // Librarian Features
         while (!logout) {
             System.out.println("\n--- Librarian Features ---");
             System.out.println("1. View Transactions");
@@ -214,6 +227,7 @@ public class Main {
         return isMember;
     }
 
+    // Reach out to borrow book to  LibraryCollections and Store the Transaction into log
     private static void borrowBook(User user, LibraryCollections library, TransactionLog log) {
         System.out.print("Enter book ID to borrow: ");
         try {
@@ -227,6 +241,8 @@ public class Main {
         }
     }
 
+    
+    // Reach out to return to LibraryCollections and Store the Transaction into log
     private static void returnBook(User user, LibraryCollections library, TransactionLog log) {
         System.out.print("Enter book ID to return: ");
         try {
@@ -245,13 +261,13 @@ public class Main {
                     return;
                 }
 
-                user.returnBook(book, log, returnDate); // ✅ pass the date
+                user.returnBook(book, log, returnDate);
             }
         } catch (NumberFormatException e) {
             System.out.println("Invalid book ID. Please enter a number.");
         }
     }
-
+    // Reserve Process
     private static void reserveBook(User user, LibraryCollections library, TransactionLog log) {
         System.out.print("Enter book ID to reserve: ");
         try {
@@ -264,7 +280,7 @@ public class Main {
             System.out.println("Invalid book ID. Please enter a number.");
         }
     }
-
+    // Librarian Add book process
     private static void addBook(LibraryCollections library, Librarian librarian) {
         System.out.print("Enter book ID: ");
         int id = Integer.parseInt(sc.nextLine());
@@ -284,10 +300,11 @@ public class Main {
         Book newBook = new Book(id, title, author, year, pages);
         librarian.addBook(library, newBook);
     }
-
+     // Librarian Remove book process
     private static void removeBook(LibraryCollections library, Librarian librarian) {
         System.out.print("Enter book ID to remove: ");
         int removeId = Integer.parseInt(sc.nextLine());
+
         librarian.removeBook(library, removeId);
     }
 }

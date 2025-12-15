@@ -42,7 +42,6 @@ public class LibraryMembers {
         }
     }
 
-
     public void showAllUsers() {
         System.out.println("=== ALL USERS ===");
         for (User u : members) {

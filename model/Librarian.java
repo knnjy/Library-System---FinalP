@@ -57,7 +57,7 @@ public class Librarian extends Person {
         }
     }
 
-    // ✅ Transaction viewing
+    // Transaction viewing
     public void viewTransactions(TransactionLog log) {
         log.showAllTransactions();
     }

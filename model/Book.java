@@ -41,6 +41,7 @@ public class Book {
     public String getAuthor() {
         return author;
     }
+    // Getter methods
 
     public boolean isAvailable() {
         return isAvailable;
@@ -54,15 +55,17 @@ public class Book {
         isAvailable = true;
     }
 
+    // Reserved by user
     public void addReservation(User user) {
         reservationQueue.add(user);
-        System.out.println(user.getName() + " reserved: " + title);
+        System.out.println(user.getName() + " reserved: " + title + "| Wait for the contact to update availability");
     }
 
     public User getNextReservation() {
         return reservationQueue.poll(); // returns and removes next user
     }
 
+    // Check for reservation
     public boolean hasReservations() {
         return !reservationQueue.isEmpty();
     }
